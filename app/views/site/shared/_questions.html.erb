@@ -1,0 +1,50 @@
+
+  <div class="bg-light p-5 rounded">
+    <% if params[:subject_id] %>
+    <h3>Mostrando wuestões por assunto "<%= params[:subject] %>"...</h3>
+    <% elsif params[:term] %>
+    <h3>Resultados para o termo "<%= params[:term] %>"...</h3>
+    <% else %>
+    <h3>Últimas perguntas cadastradas...</h3>
+    <% end %>
+    <br>
+
+<% @questions.each do |question| %>
+
+<%= form_with url: site_answer_path, local: true do |form| %>
+
+<div class="card">
+  <div class="card-header">
+  <span class="label bg-info p-1 rounded "><%= link_to "#{question.subject.description} (#{question.subject.questions_count})", site_search_subject_path(question.subject_id, question.subject.description), style:"color:#fff;" %></span>
+    <%= question.description%>
+  </div>
+  <div class="card-body">
+    <ul>
+      <% question.answers.each do |answer| %>
+      <li style="list-style:none;"> 
+        <div class="form-check">
+          <%= radio_button_tag 'answer_id', answer.id %>
+          <%= answer.description %>
+        </div>
+      </li>
+      <% end %>
+      <br> 
+      <li style="list-style:none;"> 
+        <%= form.submit "Responder", class:"btn btn-success" %>
+      </li>
+    </ul>
+  </div>
+</div>
+    <br>
+<% end %>
+<% end %>
+
+<% if user_signed_in? %>
+  <div class="text-center">
+    <%= paginate @questions %>
+  </div>
+<% else %>
+  <div class="alert alert-warning" role="alert" >
+    Efectue login para poder continuar respondendo as questões...
+  </div>
+<% end %>
