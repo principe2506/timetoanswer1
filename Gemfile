@@ -50,6 +50,7 @@ gem "faker"
 gem "kaminari"
 gem "kaminari-i18n"
 gem "cocoon"
+gem "sshkit", "~> 1.21", ">= 1.21.2" 
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -84,8 +85,3 @@ group :test do
   gem "webdrivers"
 end
 
-group :production do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "mysql2"
-gem "sqlite3", "~> 1.4"
-end
